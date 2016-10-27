@@ -27,7 +27,8 @@ app.get("/companies", function GetCompanies(req, res) {
         {
           _id: temp._id,
           name: temp.name,
-          punchCount: temp.punchCount
+          punchCount: temp.punchCount,
+          description: temp.description
         };
         CompanyArray.push(company);
       }
@@ -106,7 +107,6 @@ app.post("/companies", jsonParser, function (req, res) {
     //No company found
     console.log(err);
     console.log(docs);
-
     if(err || err == null)
     {
       //Else we can add a company
