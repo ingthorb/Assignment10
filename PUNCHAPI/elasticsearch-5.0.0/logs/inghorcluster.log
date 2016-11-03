@@ -1,0 +1,104 @@
+[2016-11-03T17:46:49,241][INFO ][o.e.n.Node               ] [] initializing ...
+[2016-11-03T17:46:49,320][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] using [1] data paths, mounts [[Windows (C:)]], net usable_space [178.3gb], net total_space [237.2gb], spins? [unknown], types [NTFS]
+[2016-11-03T17:46:49,320][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] heap size [1.9gb], compressed ordinary object pointers [true]
+[2016-11-03T17:46:49,324][INFO ][o.e.n.Node               ] [dOENi1Y] node name [dOENi1Y] derived from node ID; set [node.name] to override
+[2016-11-03T17:46:49,327][INFO ][o.e.n.Node               ] [dOENi1Y] version[5.0.0], pid[8344], build[253032b/2016-10-26T04:37:51.531Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_111/25.111-b14]
+[2016-11-03T17:46:50,341][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [aggs-matrix-stats]
+[2016-11-03T17:46:50,341][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [ingest-common]
+[2016-11-03T17:46:50,343][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-expression]
+[2016-11-03T17:46:50,345][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-groovy]
+[2016-11-03T17:46:50,345][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-mustache]
+[2016-11-03T17:46:50,346][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-painless]
+[2016-11-03T17:46:50,347][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [percolator]
+[2016-11-03T17:46:50,348][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [reindex]
+[2016-11-03T17:46:50,348][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty3]
+[2016-11-03T17:46:50,349][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty4]
+[2016-11-03T17:46:50,350][INFO ][o.e.p.PluginsService     ] [dOENi1Y] no plugins loaded
+[2016-11-03T17:46:52,987][INFO ][o.e.n.Node               ] [dOENi1Y] initialized
+[2016-11-03T17:46:52,988][INFO ][o.e.n.Node               ] [dOENi1Y] starting ...
+[2016-11-03T17:46:53,539][INFO ][o.e.t.TransportService   ] [dOENi1Y] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2016-11-03T17:46:57,624][INFO ][o.e.c.s.ClusterService   ] [dOENi1Y] new_master {dOENi1Y}{dOENi1YFSK6EbqrKKNODOw}{WR6byGczRrC0lpnmCmjUvw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2016-11-03T17:46:57,664][INFO ][o.e.g.GatewayService     ] [dOENi1Y] recovered [0] indices into cluster_state
+[2016-11-03T17:46:57,990][INFO ][o.e.h.HttpServer         ] [dOENi1Y] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2016-11-03T17:46:57,990][INFO ][o.e.n.Node               ] [dOENi1Y] started
+[2016-11-03T17:48:52,954][INFO ][o.e.n.Node               ] [dOENi1Y] stopping ...
+[2016-11-03T17:48:52,993][INFO ][o.e.n.Node               ] [dOENi1Y] stopped
+[2016-11-03T17:48:52,993][INFO ][o.e.n.Node               ] [dOENi1Y] closing ...
+[2016-11-03T17:48:53,004][INFO ][o.e.n.Node               ] [dOENi1Y] closed
+[2016-11-03T17:49:59,662][INFO ][o.e.n.Node               ] [] initializing ...
+[2016-11-03T17:49:59,750][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] using [1] data paths, mounts [[Windows (C:)]], net usable_space [178.3gb], net total_space [237.2gb], spins? [unknown], types [NTFS]
+[2016-11-03T17:49:59,750][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] heap size [1.9gb], compressed ordinary object pointers [true]
+[2016-11-03T17:49:59,758][INFO ][o.e.n.Node               ] [dOENi1Y] node name [dOENi1Y] derived from node ID; set [node.name] to override
+[2016-11-03T17:49:59,766][INFO ][o.e.n.Node               ] [dOENi1Y] version[5.0.0], pid[7532], build[253032b/2016-10-26T04:37:51.531Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_111/25.111-b14]
+[2016-11-03T17:50:00,662][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [aggs-matrix-stats]
+[2016-11-03T17:50:00,662][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [ingest-common]
+[2016-11-03T17:50:00,666][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-expression]
+[2016-11-03T17:50:00,666][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-groovy]
+[2016-11-03T17:50:00,666][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-mustache]
+[2016-11-03T17:50:00,670][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-painless]
+[2016-11-03T17:50:00,670][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [percolator]
+[2016-11-03T17:50:00,670][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [reindex]
+[2016-11-03T17:50:00,670][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty3]
+[2016-11-03T17:50:00,670][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty4]
+[2016-11-03T17:50:00,674][INFO ][o.e.p.PluginsService     ] [dOENi1Y] no plugins loaded
+[2016-11-03T17:50:02,690][INFO ][o.e.n.Node               ] [dOENi1Y] initialized
+[2016-11-03T17:50:02,694][INFO ][o.e.n.Node               ] [dOENi1Y] starting ...
+[2016-11-03T17:50:03,264][INFO ][o.e.t.TransportService   ] [dOENi1Y] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2016-11-03T17:50:07,362][INFO ][o.e.c.s.ClusterService   ] [dOENi1Y] new_master {dOENi1Y}{dOENi1YFSK6EbqrKKNODOw}{yjIE06L6Shas-MCoIYoRUw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2016-11-03T17:50:07,446][INFO ][o.e.g.GatewayService     ] [dOENi1Y] recovered [0] indices into cluster_state
+[2016-11-03T17:50:07,744][INFO ][o.e.h.HttpServer         ] [dOENi1Y] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2016-11-03T17:50:07,744][INFO ][o.e.n.Node               ] [dOENi1Y] started
+[2016-11-03T19:02:26,495][INFO ][o.e.n.Node               ] [dOENi1Y] stopping ...
+[2016-11-03T19:02:26,511][INFO ][o.e.n.Node               ] [dOENi1Y] stopped
+[2016-11-03T19:02:26,511][INFO ][o.e.n.Node               ] [dOENi1Y] closing ...
+[2016-11-03T19:02:26,519][INFO ][o.e.n.Node               ] [dOENi1Y] closed
+[2016-11-03T19:02:31,867][INFO ][o.e.n.Node               ] [] initializing ...
+[2016-11-03T19:02:31,943][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] using [1] data paths, mounts [[Windows (C:)]], net usable_space [178.3gb], net total_space [237.2gb], spins? [unknown], types [NTFS]
+[2016-11-03T19:02:31,943][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] heap size [1.9gb], compressed ordinary object pointers [true]
+[2016-11-03T19:02:31,947][INFO ][o.e.n.Node               ] [dOENi1Y] node name [dOENi1Y] derived from node ID; set [node.name] to override
+[2016-11-03T19:02:31,947][INFO ][o.e.n.Node               ] [dOENi1Y] version[5.0.0], pid[9896], build[253032b/2016-10-26T04:37:51.531Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_111/25.111-b14]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [aggs-matrix-stats]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [ingest-common]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-expression]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-groovy]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-mustache]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-painless]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [percolator]
+[2016-11-03T19:02:32,820][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [reindex]
+[2016-11-03T19:02:32,824][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty3]
+[2016-11-03T19:02:32,824][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty4]
+[2016-11-03T19:02:32,824][INFO ][o.e.p.PluginsService     ] [dOENi1Y] no plugins loaded
+[2016-11-03T19:02:34,818][INFO ][o.e.n.Node               ] [dOENi1Y] initialized
+[2016-11-03T19:02:34,818][INFO ][o.e.n.Node               ] [dOENi1Y] starting ...
+[2016-11-03T19:02:35,326][INFO ][o.e.t.TransportService   ] [dOENi1Y] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2016-11-03T19:02:39,415][INFO ][o.e.c.s.ClusterService   ] [dOENi1Y] new_master {dOENi1Y}{dOENi1YFSK6EbqrKKNODOw}{7kq3X2rKQay8iYRWUdQxmA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2016-11-03T19:02:39,463][INFO ][o.e.g.GatewayService     ] [dOENi1Y] recovered [0] indices into cluster_state
+[2016-11-03T19:02:39,745][INFO ][o.e.h.HttpServer         ] [dOENi1Y] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2016-11-03T19:02:39,745][INFO ][o.e.n.Node               ] [dOENi1Y] started
+[2016-11-03T21:56:57,932][INFO ][o.e.n.Node               ] [dOENi1Y] stopping ...
+[2016-11-03T21:56:57,947][INFO ][o.e.n.Node               ] [dOENi1Y] stopped
+[2016-11-03T21:56:57,947][INFO ][o.e.n.Node               ] [dOENi1Y] closing ...
+[2016-11-03T21:56:57,947][INFO ][o.e.n.Node               ] [dOENi1Y] closed
+[2016-11-03T21:57:05,058][INFO ][o.e.n.Node               ] [] initializing ...
+[2016-11-03T21:57:05,129][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] using [1] data paths, mounts [[Windows (C:)]], net usable_space [178.3gb], net total_space [237.2gb], spins? [unknown], types [NTFS]
+[2016-11-03T21:57:05,129][INFO ][o.e.e.NodeEnvironment    ] [dOENi1Y] heap size [1.9gb], compressed ordinary object pointers [true]
+[2016-11-03T21:57:05,129][INFO ][o.e.n.Node               ] [dOENi1Y] node name [dOENi1Y] derived from node ID; set [node.name] to override
+[2016-11-03T21:57:05,129][INFO ][o.e.n.Node               ] [dOENi1Y] version[5.0.0], pid[3588], build[253032b/2016-10-26T04:37:51.531Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_111/25.111-b14]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [aggs-matrix-stats]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [ingest-common]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-expression]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-groovy]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-mustache]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [lang-painless]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [percolator]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [reindex]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty3]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] loaded module [transport-netty4]
+[2016-11-03T21:57:06,034][INFO ][o.e.p.PluginsService     ] [dOENi1Y] no plugins loaded
+[2016-11-03T21:57:08,602][INFO ][o.e.n.Node               ] [dOENi1Y] initialized
+[2016-11-03T21:57:08,602][INFO ][o.e.n.Node               ] [dOENi1Y] starting ...
+[2016-11-03T21:57:09,110][INFO ][o.e.t.TransportService   ] [dOENi1Y] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2016-11-03T21:57:13,191][INFO ][o.e.c.s.ClusterService   ] [dOENi1Y] new_master {dOENi1Y}{dOENi1YFSK6EbqrKKNODOw}{bdCDWx1bTRe1D1xTgo56uQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2016-11-03T21:57:13,222][INFO ][o.e.g.GatewayService     ] [dOENi1Y] recovered [0] indices into cluster_state
+[2016-11-03T21:57:13,546][INFO ][o.e.h.HttpServer         ] [dOENi1Y] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2016-11-03T21:57:13,546][INFO ][o.e.n.Node               ] [dOENi1Y] started

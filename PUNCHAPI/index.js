@@ -1,10 +1,8 @@
 const express = require('express');
-var elasticsearch = require('elasticsearch');
 const mongoose = require("mongoose");
 const app = express();
 const api = require('./api');
 const port = 1337;
-
 
 app.use('/api', api);
 mongoose.connect("localhost/punchapi");

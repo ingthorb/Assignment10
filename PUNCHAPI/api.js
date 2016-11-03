@@ -6,15 +6,54 @@ const entities = require("./entities");
 const uuid = require("node-uuid");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-
+var elasticsearch = require('elasticsearch');
 var adminToken = "Batman";
 var contentType = "application/json";
 
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'error'
+})
 /**
 * Fetches a list of companies that have been added to MongoDB
 */
 app.get("/companies", function GetCompanies(req, res) {
-  entities.Company.find(function (err, docs) {
+  //Set the page to 0 as default
+  const page = req.query.page || 0;
+  const size = req.query.max || 20;
+  const search = req.query.search || "";
+  if(search == "")
+  {}
+  const promise = client.search({
+    'index': 'companies',
+    'from' : page*size,
+    'size' : max
+    'type': 'company',
+    if(search == "")
+    {
+      //Return match_all
+      queryString = {
+        match_all : {}
+      }
+    }
+    else {
+      queryString = {
+        _all : search
+      }
+    }
+    'body':{
+      'query':{
+        queryString
+      }
+    });
+    promise.then((doc) => {
+      res.send(doc);
+    }, (err) =>{
+      res.statusCode = 500;
+      return res.json("Server error");
+    })
+  });
+  /*entities.Company.find(function (err, docs) {
     if (err) {
       res.statusCode = 500
       return res.json(err);
@@ -35,14 +74,14 @@ app.get("/companies", function GetCompanies(req, res) {
       res.json(CompanyArray);
     }
   }
-);
+);*/
 });
 /**
 * Fetches a given company that has been added to MongoDB by id.
 * if the the we can not finde the id of the company in the db we return 404
 */
 app.get("/companies/:id", function (req, res) {
-  entities.Company.find({ _id: req.params.id }, function (err, docs) {
+    entities.Company.find({ _id: req.params.id }, function (err, docs) {
     if (err) {
       res.statusCode = 404
       return res.json(err);
@@ -105,14 +144,13 @@ app.post("/companies", jsonParser, function (req, res) {
   }
   entities.Company.find({ name: req.body.name }, function (err, docs) {
     //No company found
-    console.log(err);
-    console.log(docs);
     if(err || err == null)
     {
       //Else we can add a company
       var Company = {
         name: req.body.name,
-        punchCount: req.body.punchCount
+        punchCount: req.body.punchCount,
+        description: req.body.description
       };
 
       var entity = new entities.Company(Company);
@@ -127,9 +165,28 @@ app.post("/companies", jsonParser, function (req, res) {
             return res.json("Server error");
           }
           else {
-            res.statusCode = 201;
-            return res.json({
-              _id: entity._id,
+            //Add entity._id to elastic search
+            const data = {
+              "id": entity._id,
+              "name": Company.name,
+              "punchCount": Company.punchCount,
+              "description": Company.description
+            };
+
+            const promise = client.index({
+              'index': 'companies',
+              'type': 'company',
+              'body': data
+            });
+
+            promise.then((doc) => {
+              res.statusCode = 201;
+              return res.json({
+                _id: entity._id,
+              });
+            },(err) => {
+              res.statusCode = 500;
+              return res.json("Server error");
             });
           }
         });
