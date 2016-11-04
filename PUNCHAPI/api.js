@@ -14,8 +14,6 @@ const client = new elasticsearch.Client({
   host: "localhost:9200",
   log: "error"
 });
-//Gefur mer annað hvort conflict eða servererror
-//Nær ekki að bæta við í elastic
 /**
 * Fetches a list of companies that have been added to MongoDB
 */
@@ -24,60 +22,52 @@ app.get("/companies", function GetCompanies(req, res) {
   const page = req.query.page || 0;
   const size = req.query.max || 20;
   const search = req.query.search || "";
-  console.log(page);
-  console.log(size);
-  console.log(search);
+
   var queryString;
-  var promise;
   if(search == "")
   {
-     promise = client.search({
-      index: "companies",
-      from : page*size,
-      size : size,
-      type: 'company',
-      body:{
-        //"hits.hits.sort": { 'name.keyword' : { order: 'asc'} },
-        query:{
-            match_all : {}
-        }
-      }
-    });
+    queryString = {
+      match_all : {}
+    };
   }
   else {
-     promise = client.search({
-      index: "companies",
-      from : page*size,
-      size : size,
-      type: 'company',
-      body:{
-        //sort: { 'name.keyword' : { order: 'asc'} },
-        query:{
-          match:{
-            _all : search,
-          }
-        }
+    queryString = {
+      match:{
+        _all : search,
       }
-    });
+    }
   }
-  //only thing missing is sort
-  promise.then((doc) => {
-    res.send(doc.hits.hits);
-  }, (err) =>{
-    console.log(err);
+  console.log(queryString);
+  const promise = client.search({
+    index: "companies",
+    from : page,
+    size : size,
+    type: 'company',
+    body:{
+      query: queryString,
+      sort: { 'name.keyword' : { order: 'asc'} },
+    }
+  });
+  promise.then((searchesdoc) => {
+    res.json(searchesdoc.hits.hits.map(search => {
+      return{
+        id: search._id,
+        name: search._source.name
+      };
+    }));
+  }
+  , (err) =>{
+    console.log("Most likely nothing in database!");
     res.statusCode = 500;
     return res.json("Server error");
   });
-
-
-  });
+});
 /**
 * Fetches a given company that has been added to MongoDB by id.
 * if the the we can not finde the id of the company in the db we return 404
 */
 app.get("/companies/:id", function (req, res) {
-  console.log("test");
-    entities.Company.find({ _id: req.params.id }, function (err, docs) {
+  entities.Company.find({ _id: req.params.id }, function (err, docs) {
     if (err) {
       res.statusCode = 404
       return res.json("Not found");
@@ -95,8 +85,6 @@ app.get("/companies/:id", function (req, res) {
     }
   });
 });
-
-
 /**
 * Allows administrators to add new companies to MongoDB
 */
@@ -111,6 +99,14 @@ app.post("/companies", jsonParser, function (req, res) {
     return res.json("Unsupported Media Type");
   }
   entities.Company.find({ name: req.body.name }, function (err, docs) {
+    if(docs[0] != null)
+    {
+      if(docs[0].name !== undefined )
+      {
+        res.statusCode = 409;
+        return res.json("Conflict");
+      }
+    }
     //No company found
     if(err || err == null)
     {
@@ -132,32 +128,24 @@ app.post("/companies", jsonParser, function (req, res) {
             return res.json("Server error");
           }
           else {
-            //Add entity._id to elastic search
-            /*const data = {
-              "id": entity._id,
-              "name": Company.name,
-              "punchCount": Company.punchCount,
-              "description": Company.description
-            };*/
             const promise = client.index({
               index: "companies",
               type: "company",
+              id: String(entity._id),
               body: {
-                doc: {
-                  "id": entity._id,
-                  "name": Company.name,
-                  "punchCount": Company.punchCount,
-                  "description": Company.description
-                }
+                "id": entity._id,
+                "name": Company.name,
+                "punchCount": Company.punchCount,
+                "description": Company.description
               }
             });
-
             promise.then((doc) => {
               res.statusCode = 201;
               return res.json({
                 _id: entity._id,
               });
             },(err) => {
+              console.log(err);
               res.statusCode = 500;
               return res.json("Server error");
             });
@@ -165,17 +153,7 @@ app.post("/companies", jsonParser, function (req, res) {
         });
       });
     }
-    if(docs[0] != null)
-    {
-        if(docs[0].name !== undefined )
-        {
-          res.statusCode = 409;
-          return res.json("Conflict");
-        }
-    }
   });
-
 });
-
 
 module.exports = app;
