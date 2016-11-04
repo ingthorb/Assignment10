@@ -10,10 +10,12 @@ var elasticsearch = require('elasticsearch');
 var adminToken = "Batman";
 var contentType = "application/json";
 
-var client = new elasticsearch.Client({
-  host: 'localhost:9200',
-  log: 'error'
-})
+const client = new elasticsearch.Client({
+  host: "localhost:9200",
+  log: "error"
+});
+//Gefur mer annað hvort conflict eða servererror
+//Nær ekki að bæta við í elastic
 /**
 * Fetches a list of companies that have been added to MongoDB
 */
@@ -22,113 +24,79 @@ app.get("/companies", function GetCompanies(req, res) {
   const page = req.query.page || 0;
   const size = req.query.max || 20;
   const search = req.query.search || "";
+  console.log(page);
+  console.log(size);
+  console.log(search);
+  var queryString;
+  var promise;
   if(search == "")
-  {}
-  const promise = client.search({
-    'index': 'companies',
-    'from' : page*size,
-    'size' : max
-    'type': 'company',
-    if(search == "")
-    {
-      //Return match_all
-      queryString = {
-        match_all : {}
-      }
-    }
-    else {
-      queryString = {
-        _all : search
-      }
-    }
-    'body':{
-      'query':{
-        queryString
+  {
+     promise = client.search({
+      index: "companies",
+      from : page*size,
+      size : size,
+      type: 'company',
+      body:{
+        //"hits.hits.sort": { 'name.keyword' : { order: 'asc'} },
+        query:{
+            match_all : {}
+        }
       }
     });
-    promise.then((doc) => {
-      res.send(doc);
-    }, (err) =>{
-      res.statusCode = 500;
-      return res.json("Server error");
-    })
-  });
-  /*entities.Company.find(function (err, docs) {
-    if (err) {
-      res.statusCode = 500
-      return res.json(err);
-    }
-    else {
-      var CompanyArray = [];
-      for (i = 0; i < docs.length; i++) {
-        var temp = docs[i];
-        var company =
-        {
-          _id: temp._id,
-          name: temp.name,
-          punchCount: temp.punchCount,
-          description: temp.description
-        };
-        CompanyArray.push(company);
-      }
-      res.json(CompanyArray);
-    }
   }
-);*/
-});
+  else {
+     promise = client.search({
+      index: "companies",
+      from : page*size,
+      size : size,
+      type: 'company',
+      body:{
+        //sort: { 'name.keyword' : { order: 'asc'} },
+        query:{
+          match:{
+            _all : search,
+          }
+        }
+      }
+    });
+  }
+  //only thing missing is sort
+  promise.then((doc) => {
+    res.send(doc.hits.hits);
+  }, (err) =>{
+    console.log(err);
+    res.statusCode = 500;
+    return res.json("Server error");
+  });
+
+
+  });
 /**
 * Fetches a given company that has been added to MongoDB by id.
 * if the the we can not finde the id of the company in the db we return 404
 */
 app.get("/companies/:id", function (req, res) {
+  console.log("test");
     entities.Company.find({ _id: req.params.id }, function (err, docs) {
     if (err) {
       res.statusCode = 404
-      return res.json(err);
+      return res.json("Not found");
     }
     else {
       if (docs != null && docs.length > 0) {
         var company = {
           _id: docs[0]._id,
           name: docs[0].name,
-          punchCount: docs[0].punchCount
+          punchCount: docs[0].punchCount,
+          description: docs[0].description
         }
         res.json(company);
-      }
-      else {
-        res.statusCode = 404
-        return res.json("Company not found");
       }
     }
   });
 });
 
-/**
-* Returns a list of all users that are in the MongoDB.
-*/
-app.get("/users", function(req, res) {
-  entities.User.find(function (err, docs) {
-    if (err) {
-      res.statusCode = 500
-      return res.json(err);
-    }
-    else {
-      var UserArray = [];
-      for (var i = 0; i < docs.length; i++) {
-        var temp = docs[i];
-        var user =
-        {
-          _id: temp._id,
-          name: temp.name,
-          gender: temp.gender
-        };
-        UserArray.push(user);
-      }
-      res.json(UserArray);
-    }
-  }
-);
-});
+
 /**
 * Allows administrators to add new companies to MongoDB
 */
@@ -152,7 +120,6 @@ app.post("/companies", jsonParser, function (req, res) {
         punchCount: req.body.punchCount,
         description: req.body.description
       };
-
       var entity = new entities.Company(Company);
       entity.validate(function (err) {
         if (err) {
@@ -166,17 +133,23 @@ app.post("/companies", jsonParser, function (req, res) {
           }
           else {
             //Add entity._id to elastic search
-            const data = {
+            /*const data = {
               "id": entity._id,
               "name": Company.name,
               "punchCount": Company.punchCount,
               "description": Company.description
-            };
-
+            };*/
             const promise = client.index({
-              'index': 'companies',
-              'type': 'company',
-              'body': data
+              index: "companies",
+              type: "company",
+              body: {
+                doc: {
+                  "id": entity._id,
+                  "name": Company.name,
+                  "punchCount": Company.punchCount,
+                  "description": Company.description
+                }
+              }
             });
 
             promise.then((doc) => {
@@ -203,137 +176,6 @@ app.post("/companies", jsonParser, function (req, res) {
   });
 
 });
-/**
-* Allows administrators to add new users to MongoDB
-*/
-app.post("/users", jsonParser, function (req, res) {
-  if (req.headers.authorization !== adminToken) {
-    res.statusCode = 401;
-    return res.json("Not Authorized");
-  }
 
-  var User = {
-    name: req.body.name,
-    gender: req.body.gender,
-    token: uuid.v1()
-  };
-  var entity = new entities.User(User);
-  entity.validate(function (err) {
-    if (err) {
-      res.statusCode = 412;
-      return res.json("Precondition failed");
-    }
-    entity.save(function (err) {
-      if (err) {
-        res.statusCode = 500;
-        return res.json("Server error");
-      }
-      else {
-        res.statusCode = 201;
-        return res.json({
-          _id: entity._id,
-          token: User.token
-        });
-      }
-    });
-  });
-});
-/**
-* Creates a new punch for the "current user" for a given company
-*/
-app.post("/my/punches", jsonParser, function (req, res) {
-  var tempToken = req.headers.authorization;
 
-  if (tempToken == undefined) {
-    res.statusCode = 401
-    return res.json("The token is missing");
-  }
-
-  var Punchlength = false;
-  var PunchesCount = [];
-  var UserArray = {};
-  entities.User.find({ token: tempToken }, function (err, docs) {
-
-    if (err) {
-      res.statusCode = 401
-      return res.json(err);
-    }
-    else {
-      if (docs == null || docs.length == 0) {
-        res.statusCode = 404
-        return res.json("User not found");
-      }
-      UserArray = docs[0];
-      entities.Company.find({ _id: req.body.company_id }, function (err, docs) {
-        if (err) {
-          res.statusCode = 404
-          return res.json(err);
-        }
-        else {
-          if (docs == null || docs.length == 0) {
-            res.statusCode = 404
-            return res.json("Company not found");
-          }
-          var CompanyArray = docs[0];
-          var punch = {
-            user_id: UserArray._id,
-            company_id: req.body.company_id
-          }
-          var entity = new entities.Punches(punch);
-          entity.validate(function (err) {
-            if (err) {
-              res.statusCode = 412;
-              return res.json("Precondition failed");
-            }
-          });
-        }
-        entity.save(function (err) {
-          if (err) {
-            res.statusCode = 500;
-            return res.json("Server error");
-          }
-          else {
-            entities.Punches.find({ company_id: req.body.company_id , used: false}, function (err, docs) {
-              if (err) {
-                res.statusCode = 404
-                return res.json(err);
-              }
-              else {
-                PunchesCount = docs;
-                if (PunchesCount.length == CompanyArray.punchCount) {
-                  Punchlength = true;
-                  //Update the punches
-                  var query = { company_id: req.body.company_id, used: false };
-                  var options;
-                  entities.Punches.update(query, { $set: { used: true } },options = {multi:true}, function (err,res) {
-                    if (err) {
-                      res.statusCode = 500;
-                      return res.json("Server error");
-                    }
-                    else {
-                    //  console.log(res);
-                    }
-                  });
-                }
-                if (Punchlength) {
-                  //If the punch count has been reached
-                  res.statusCode = 201;
-                  return res.json({
-                    _id: entity._id,
-                    discount: true
-                  });
-                }
-                //If the punch count hasn't been reached
-                res.statusCode = 201;
-                return res.json({
-                  _id: entity._id,
-                });
-              }
-            });
-          }
-        });
-      });
-    }
-  });
-});
 module.exports = app;
